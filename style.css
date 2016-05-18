@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'Miroslav';
+  src: url('miroslav.ttf') format('truetype');
+}
+
+body {
+  background-color: #000;
+  background-image: url('background_mid.jpg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+}
+
+#main {
+  color: #ebc0a9;
+  font-weight: bold;
+  margin: auto;
+  width: 500pt;
+  font-family: 'Miroslav', 'Georgia', serif;
+  text-align: center;
+}
+
+#buttons {
+  margin-top: 20pt;
+}
+
+#next, #modifier, #share {
+  background-color: #333;
+  font-size: 22pt;
+  vertical-align: middle;
+  padding: 5pt;
+  margin: 0pt 10pt;
+  cursor: pointer;
+}
+
+#share-link, #share-link:visited {
+  color: #ebc0a9;
+  text-decoration: none;
+}
+
+#modifier-check {
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  vertical-align: middle;
+  margin: 0 5pt 5pt 5pt;
+  cursor: pointer;
+}
+
+#next {
+  border: 5px solid #ebc0a9;
+}
+
+#modifier {
+}
+
+#author {
+  color: #eb9079;
+  margin-top: 52pt;
+  font-size: 22pt;
+}
+
+#title {
+  margin-top: 120pt;
+}
+
+#content {
+  font-size: 32pt;
+  line-height: 60pt;
+  text-transform: uppercase;
+}
+
+#publisher {
+  color: #eb9079;
+  font-size: 16pt;
+  position: absolute;
+  width: 500pt;
+  text-transform: uppercase;
+  top: 640pt;
+}
