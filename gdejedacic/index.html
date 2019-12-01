@@ -1,16 +1,22 @@
 <html>
+<!-- 
+Contact: gdejedacic@gmail.com
+-->
 <head>
 
 <meta charset="UTF-8">
-<meta property="og:image" content="dacic_thumb.jpg" />
+<meta property="og:image" content="https://gdejedacic.com/dacic_thumb.jpg" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://gdejedacic.com" />
-<meta property="og:title" content="Gde je Dačić?" />
-<meta property="og:description" content="Gde je Dačić danas?" />
+<meta property="og:title" content="Gde je Dačić danas?" />
+<meta property="og:description" content="Saznajte sa kim Dačić danas potpisuje sporazum" />
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
 <style>
 body {
-  background-color: white;
+  background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -25,17 +31,37 @@ body {
   font-size: 4vw;
 }
 
+#subtitle {
+  font-size: 3vw;
+  padding-top: 100px;
+}
+
 #today {
   background-color: rgba(0.2, 0.5, 0.9, 0.3);
   display: none;
   font-size: 3vw;
   color: #fff;
+  position: absolute;
+  z-index: 2;
 }
 
 #dacic  {
   display: none;
   width: 100%;
   text-align: center;
+}
+
+#dacicImg  {
+  position: absolute;
+  bottom: 0px;
+  z-index: 1;
+}
+
+a:link,
+a:visited,
+a:focus,
+a:hover {
+color: #aaf;
 }
 </style>
 
@@ -52,36 +78,36 @@ body {
 </head>
 
 <body>
-<div id="locator">Lociram Dačića...</div>
+<div id="locator"><div>Lociram Dačića...</div><div id="subtitle">Sa kim Ivica Dačić danas potpisuje sporazum?</div></div>
 <div id="today"></div>
-<div id="dacic"><img src="dacic.png" /></div>
+<div id="dacic"><img src="dacic.png" id="dacicImg" /></div>
 
 <script>
 var httpRequest = new XMLHttpRequest();
 var dacicLocation = "";
 const prefix = "Dačić je danas ";
-const url = "locations.txt";
+const url = "locations.txt?" + Math.random();
+
+var urlParams = new URLSearchParams(window.location.search);
+const parsedQuery = parseInt(urlParams.get('q'), 10);
 
 var reload = function() { 
   var locations = dacicLocation.split("\n");
   var numberOfLocations = locations.length - 1;
 
-  /*
-  var now = new Date();
-  var start = new Date(now.getFullYear(), 0, 0);
-  var diff = now - start;
-  var oneDay = 1000 * 60 * 60 * 24;
-  var day = Math.floor(diff / oneDay) + 1;
-  var locationOfTheDay = day % numberOfLocations;
-  */
+  var index = 0;
+  if (isNaN(parsedQuery)) {
+    index = Math.floor(Math.random() * numberOfLocations);    
+  } else {
+    index = parsedQuery % numberOfLocations;
+  }
 
-  var locationOfTheDay = Math.floor(Math.random() * numberOfLocations);
-  var imageOfTheDay = "locations/" + locationOfTheDay + ".jpg";
+  var imageOfTheDay = "locations/" + index + ".jpg";
 
   document.body.style.backgroundImage = "url(" + imageOfTheDay + ")";
 
   document.getElementById("locator").style.display = "none";
-  document.getElementById("today").innerHTML = prefix + locations[locationOfTheDay];
+  document.getElementById("today").innerHTML = prefix + locations[index] + "(<a id='morelink' href='http://bit.ly/gdejedacic'>više</a>)";
   document.getElementById("today").style.display = "block";
   document.getElementById("dacic").style.display = "block";
 
@@ -91,7 +117,6 @@ httpRequest.open("GET", url);
 httpRequest.onreadystatechange = (e) => {
   if (httpRequest.readyState === httpRequest.DONE) {
     if (httpRequest.status === 200) {
-      console.log(httpRequest.responseText);
       dacicLocation = httpRequest.responseText;
       setTimeout(reload, 5000);
     }
