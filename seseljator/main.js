@@ -9,8 +9,8 @@ seki.update = function(content) {
   url += "&display=popup&caption=Нова књига из едиције Шешељатора";
   url += "&description=" + encoded_content;
   url += "&picture=http://www.seseljator.com/icon.jpg";
-  url += "&link=http://www.seseljator.com/?" + encoded_content;
-  url += "&redirect_uri=http://www.seseljator.com/?" + encoded_content;
+  url += "&link=http://www.seseljator.com/?title=" + encoded_content;
+  url += "&redirect_uri=http://www.seseljator.com/?title=" + encoded_content;
 
   document.getElementById("share-link").href = url;
 };
@@ -493,9 +493,15 @@ document.init_seki = function() {
 
   if (document.location.search.length > 0) {
     var content = decodeURIComponent(document.location.search.substring(1));
-    content = content.replace(/\+/g, " ");
-    content = content.replace(/&.*/g, "");
-    seki.update(content);
+	const urlParams = new URLSearchParams(content);
+	var title = urlParams.get('title')
+	if (title) {
+	  title = title.replace(/\+/g, " ");
+      title = title.replace(/&.*/g, "");
+      seki.update(title);
+	} else {
+	  seki.update(seki.generate());
+	}    
   } else {
     seki.update(seki.generate());
   }
